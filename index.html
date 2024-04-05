@@ -89,7 +89,12 @@
 		<a-entity camera></a-entity>
 		</a-scene>
 		
-		
+		<div class="ui">
+			<img id="snap">
+			<a href="#" id="delete-photo" title="Delete Photo" class="disabled"><i class="material-icons">delete</i></a>
+			<a href="" id="take-photo" title="Take Photo"><i class="material-icons">photo_camera</i></a>
+			<a href="#" id="download-photo" download="selfie.png" title="Save Photo" class="disabled" target="_blank"><i class="material-icons">file_download</i></a>
+		</div>
 	</body>
 	<script>
 		var image = document.querySelector('#snap');
@@ -145,17 +150,9 @@
 				//キャンバスにvideoをコピー
 				resizedContext.drawImage(video, 0, 0, width, height);
 
-				//カメラの画角でar側の縮小処理を変える
-				if (width > height) {
-					// 横長（PC)
-					resizedContext.drawImage(aScene, 0, 0, width, height);
-				} else {
-					// 縦長（スマホ）
-					var scale = height / width;
-					var scaledWidth = height * scale;
-					var marginLeft = (width - scaledWidth) / 2;
-					resizedContext.drawImage(aScene, marginLeft, 0, scaledWidth, height);
-				}
+				
+				resizedContext.drawImage(aScene, 0, 0, width, height);
+
 				return resizedCanvas.toDataURL('image/png');
 			}
 		}
