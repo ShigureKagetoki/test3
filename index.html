@@ -5,7 +5,7 @@
         	<script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
         	<script src="https://raw.githack.com/AR-js-org/studio-backend/master/src/modules/marker/tools/gesture-detector.js"></script>
         	<script src="https://raw.githack.com/AR-js-org/studio-backend/master/src/modules/marker/tools/gesture-handler.js"></script>
-		<meta name="viewport" content="width=device-width,initial-scale=1">
+		<meta name="viewport" content="width=device-width,initial-scale=0.5">
     		<title>かげときの準備室</title>
 		
 		<style>
@@ -150,9 +150,17 @@
 				//キャンバスにvideoをコピー
 				resizedContext.drawImage(video, 0, 0, width, height);
 
-				
-				resizedContext.drawImage(aScene, 0, 0, width, height);
-
+				//カメラの画角でar側の縮小処理を変える
+				if (width > height) {
+					// 横長（PC)
+					resizedContext.drawImage(aScene, 0, 0, width, height);
+				} else {
+					// 縦長（スマホ）
+					var scale = height / width;
+					var scaledWidth = height * scale;
+					var marginLeft = (width - scaledWidth) / 2;
+					resizedContext.drawImage(aScene, marginLeft, 0, scaledWidth, height);
+				}
 				return resizedCanvas.toDataURL('image/png');
 			}
 		}
